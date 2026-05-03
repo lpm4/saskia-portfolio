@@ -1,0 +1,70 @@
+---
+import CloudinaryImage from './CloudinaryImage.astro';
+
+interface Props {
+  title: string;
+  slug: string;
+  thumbnailUrl: string;
+  category: string;
+  description?: string;
+  featured?: boolean;
+}
+
+const {
+  title,
+  slug,
+  thumbnailUrl,
+  category,
+  description,
+  featured = false,
+} = Astro.props;
+
+// Formater la catégorie pour l'affichage
+const categoryLabel = category.charAt(0).toUpperCase() + category.slice(1);
+---
+
+<article class="group">
+  <a
+    href={`/films/${slug}`}
+    class="block overflow-hidden"
+  >
+    <!-- Image -->
+    <div class="aspect-[16/9] overflow-hidden bg-gray-200 mb-4">
+      <CloudinaryImage
+        src={thumbnailUrl}
+        alt={title}
+        widths={[400, 800]}
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        aspectRatio="16/9"
+        class="group-hover:scale-105 transition-transform duration-500"
+      />
+    </div>
+
+    <!-- Contenu -->
+    <div class="space-y-2">
+      <!-- Catégorie -->
+      <p class="text-xs uppercase tracking-widest text-gray-600">
+        {categoryLabel}
+      </p>
+
+      <!-- Titre -->
+      <h3 class="text-lg font-bold uppercase tracking-wide group-hover:opacity-70 transition-opacity" style="font-family: 'Pragmatica Extended', sans-serif; letter-spacing: -0.05em;">
+        {title}
+      </h3>
+
+      <!-- Description (optionnelle) -->
+      {description && (
+        <p class="text-sm text-gray-700 line-clamp-2 font-sans">
+          {description}
+        </p>
+      )}
+
+      {/* Badge featured */}
+      {featured && (
+        <span class="inline-block px-2 py-1 text-xs bg-black text-white uppercase">
+          Featured
+        </span>
+      )}
+    </div>
+  </a>
+</article>

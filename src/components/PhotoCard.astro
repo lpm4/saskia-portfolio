@@ -1,0 +1,50 @@
+---
+import CloudinaryImage from './CloudinaryImage.astro';
+
+interface Props {
+  subject: string;
+  slug: string;
+  coverImageUrl: string;
+  imageCount?: number;
+}
+
+const {
+  subject,
+  slug,
+  coverImageUrl,
+  imageCount,
+} = Astro.props;
+---
+
+<article class="group">
+  <a
+    href={`/photos/${slug}`}
+    class="block overflow-hidden"
+  >
+    <!-- Image de couverture -->
+    <div class="aspect-[3/4] overflow-hidden bg-gray-200 mb-4">
+      <CloudinaryImage
+        src={coverImageUrl}
+        alt={subject}
+        widths={[400, 800]}
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        aspectRatio="3/4"
+        class="group-hover:scale-105 transition-transform duration-500"
+      />
+    </div>
+
+    <!-- Nom du sujet -->
+    <div class="space-y-2">
+      <h3 class="text-lg font-bold uppercase tracking-wide group-hover:opacity-70 transition-opacity" style="font-family: 'Pragmatica Extended', sans-serif; letter-spacing: -0.05em;">
+        {subject}
+      </h3>
+
+      {/* Nombre d'images */}
+      {imageCount && imageCount > 1 && (
+        <p class="text-xs uppercase tracking-widest text-gray-600">
+          {imageCount} photos
+        </p>
+      )}
+    </div>
+  </a>
+</article>

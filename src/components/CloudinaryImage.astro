@@ -1,0 +1,65 @@
+---
+interface Props {
+  src: string; // URL Cloudinary complète ou placeholder
+  alt: string;
+  widths?: number[]; // Tailles responsive (ex: [400, 800, 1200])
+  sizes?: string; // Attribut sizes CSS
+  aspectRatio?: string; // ex: "16/9", "3/4"
+  class?: string;
+  loading?: 'eager' | 'lazy';
+  priority?: boolean; // Pour l'image hero (LCP)
+}
+
+const {
+  src,
+  alt,
+  widths = [400, 800, 1200, 1600],
+  sizes = '100vw',
+  aspectRatio,
+  class: className = '',
+  loading = 'lazy',
+  priority = false,
+} = Astro.props;
+
+// Vérifier si c'est un placeholder ou une vraie URL Cloudinary
+const isPlaceholder = src.includes('placeholder.cloudinary.com');
+
+// Générer les URLs responsive avec transformations Cloudinary
+const generateCloudinaryUrl = (width: number) => {
+  if (isPlaceholder) {
+    return `${src}?w=${width}`;
+  }
+
+  // Si c'est une vraie URL Cloudinary, ajouter les transformations
+  if (src.includes('cloudinary.com')) {
+    // Insérer les transformations après /upload/
+    return src.replace('/upload/', `/upload/f_auto,q_auto,w_${width}/`);
+  }
+
+  // Si ce n'est ni un placeholder ni Cloudinary, retourner l'URL telle quelle
+  return src;
+};
+
+// Générer le srcset
+const srcset = widths.map(w => `${generateCloudinaryUrl(w)} ${w}w`).join(', ');
+
+// URL par défaut (taille moyenne)
+const defaultSrc = generateCloudinaryUrl(widths[1] || widths[0]);
+
+// Classes pour l'aspect ratio si spécifié
+const aspectRatioClass = aspectRatio ? `aspect-[${aspectRatio.replace('/', '-')}]` : '';
+---
+
+<img
+  src={defaultSrc}
+  srcset={srcset}
+  sizes={sizes}
+  alt={alt}
+  loading={priority ? 'eager' : loading}
+  fetchpriority={priority ? 'high' : undefined}
+  class:list={[
+    'w-full h-full object-cover',
+    aspectRatioClass,
+    className
+  ]}
+/>
