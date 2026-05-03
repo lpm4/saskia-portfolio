@@ -1,0 +1,138 @@
+---
+const currentPath = Astro.url.pathname;
+
+const navItems = [
+  { href: '/films', label: 'FILMS' },
+  { href: '/photos', label: 'PHOTOS' },
+  { href: '/backstage', label: 'BACKSTAGE' },
+  { href: '/about', label: 'ABOUT' },
+];
+---
+
+<header class="fixed top-0 left-0 right-0 z-50 bg-[#E8E4DF] border-b border-black">
+  <nav class="px-6 md:px-8 py-6">
+    <div class="flex items-center justify-between">
+      <!-- Logo -->
+      <a
+        href="/"
+        class="header-logo hover:opacity-70 transition-base"
+      >
+        REALISATRICE - PHOTOGRAPHE
+      </a>
+
+      <!-- Desktop Navigation -->
+      <ul class="hidden md:flex items-center gap-8">
+        {navItems.map(({ href, label }) => (
+          <li>
+            <a
+              href={href}
+              class:list={[
+                "header-nav-item transition-base",
+                currentPath.startsWith(href)
+                  ? "text-black"
+                  : "text-black/70 hover:text-black"
+              ]}
+            >
+              {label}
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      <!-- Mobile Menu Button -->
+      <button
+        id="menu-toggle"
+        class="md:hidden p-2 hover:opacity-70 transition-base"
+        aria-label="Toggle menu"
+      >
+        <svg
+          class="w-5 h-5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+          />
+        </svg>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<!-- Mobile Menu Overlay -->
+<div
+  id="mobile-menu"
+  class="fixed inset-0 z-[100] bg-[#E8E4DF] hidden md:hidden"
+>
+  <div class="flex flex-col h-full">
+    <!-- Header du menu mobile -->
+    <div class="flex items-center justify-between px-6 py-6 border-b border-black">
+      <span class="header-logo">REALISATRICE - PHOTOGRAPHE</span>
+      <button
+        id="menu-close"
+        class="p-2 hover:opacity-70 transition-base"
+        aria-label="Close menu"
+      >
+        <svg
+          class="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Menu items centrés -->
+    <div class="flex-1 flex items-center justify-center">
+      <ul class="flex flex-col gap-8 text-center">
+        {navItems.map(({ href, label }) => (
+          <li>
+            <a
+              href={href}
+              class="text-4xl font-bold uppercase tracking-wide hover:opacity-70 transition-base"
+              style="font-family: 'Pragmatica Extended', sans-serif; letter-spacing: -0.08em;"
+            >
+              {label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+  const menuToggle = document.getElementById('menu-toggle');
+  const menuClose = document.getElementById('menu-close');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  menuToggle?.addEventListener('click', () => {
+    mobileMenu?.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  });
+
+  menuClose?.addEventListener('click', () => {
+    mobileMenu?.classList.add('hidden');
+    document.body.style.overflow = '';
+  });
+
+  // Fermer le menu quand on clique sur un lien
+  const menuLinks = mobileMenu?.querySelectorAll('a');
+  menuLinks?.forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu?.classList.add('hidden');
+      document.body.style.overflow = '';
+    });
+  });
+</script>

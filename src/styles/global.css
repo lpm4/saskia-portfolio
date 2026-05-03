@@ -1,0 +1,193 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Fonts Self-Hosted */
+@font-face {
+  font-family: 'Cormorant Garamond';
+  src: url('/fonts/CormorantGaramond-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  src: url('/fonts/CormorantGaramond-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  src: url('/fonts/CormorantGaramond-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Aktiv Grotesk';
+  src: url('/fonts/AktivGrotesk-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Aktiv Grotesk';
+  src: url('/fonts/AktivGrotesk-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Pragmatica Extended';
+  src: url('/fonts/Pragmatica-Extended-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Courier Std';
+  src: url('/fonts/CourierStd-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* CSS Variables - Design System */
+:root {
+  /* Colors */
+  --color-black: #000000;
+  --color-white: #FFFFFF;
+  --color-beige: #E8E4DF;
+  --color-beige-light: #F0EDE8;
+  --color-tan: #C9B89A;
+  --color-gray-50: #FAFAFA;
+  --color-gray-100: #F5F5F5;
+  --color-gray-200: #E5E5E5;
+  --color-gray-800: #262626;
+
+  /* Spacing */
+  --space-section: 8rem;      /* 128px - py-32 equivalent */
+  --space-container: 2rem;    /* 32px - px-8 equivalent */
+  --space-gap: 2rem;          /* 32px - gap-8 equivalent */
+
+  /* Typography */
+  --font-serif: 'Cormorant Garamond', serif;
+  --font-sans: 'Aktiv Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Transitions */
+  --transition-base: 300ms ease-in-out;
+}
+
+/* Base Styles */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply font-sans text-black bg-white antialiased;
+    font-feature-settings: 'kern' 1, 'liga' 1;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+  }
+}
+
+/* Utilities */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .container-custom {
+    @apply max-w-7xl mx-auto px-container;
+  }
+
+  .transition-base {
+    transition: all var(--transition-base);
+  }
+
+  /* Header Typography - Valeurs exactes du site original */
+  .header-logo {
+    font-family: 'Aktiv Grotesk', sans-serif;
+    font-size: 14.362px;
+    font-weight: 400;
+    letter-spacing: 0.7181px;
+    line-height: 20.1068px;
+    text-transform: uppercase;
+  }
+
+  .header-nav-item {
+    font-family: 'Aktiv Grotesk', sans-serif;
+    font-size: 13.696px;
+    font-weight: 400;
+    letter-spacing: 0.27392px;
+    line-height: 24.6528px;
+    text-transform: uppercase;
+  }
+
+  /* Footer Typography - Valeurs exactes du site original */
+  .footer-title {
+    font-family: 'Pragmatica Extended', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -1.28px;
+    line-height: 20.8px;
+    text-transform: uppercase;
+    color: rgb(245, 245, 243);
+  }
+
+  /* Homepage Typography - Valeurs exactes du site original */
+  .hero-title {
+    font-family: 'Pragmatica Extended', sans-serif;
+    font-size: clamp(32px, 8.5vw, 149.8px);
+    font-weight: 700;
+    letter-spacing: -0.08em;
+    line-height: 1;
+    text-transform: uppercase;
+    color: rgb(0, 0, 0);
+    white-space: nowrap;
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    padding-left: 2rem;
+  }
+
+  .hero-subtitle {
+    font-family: 'Pragmatica Extended', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -1.28px;
+    line-height: 20.8px;
+    text-transform: uppercase;
+    color: rgb(226, 206, 182);
+    word-spacing: 0.4em;
+  }
+}

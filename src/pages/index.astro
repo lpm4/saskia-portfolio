@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout>
+  <!-- Hero Section -->
+  <section class="min-h-screen bg-[#E8E4DF] flex items-center">
+    <div class="w-full py-20">
+      <div class="px-8">
+        <h1 class="hero-title mb-16">
+          SASKIA MAITREPIERRE
+        </h1>
+      </div>
+
+      <div class="grid grid-cols-[2fr_1fr] md:grid-cols-[1fr_1fr] gap-4 md:gap-12 items-start px-8">
+        <!-- Image -->
+        <div class="aspect-[3/4] w-full overflow-hidden">
+          <img
+            src="/images/hero-photo.webp"
+            alt="Saskia Maitrepierre"
+            class="w-full h-full object-cover"
+            loading="eager"
+          />
+        </div>
+
+        <!-- Text -->
+        <div class="flex items-start pt-4 md:pt-8">
+          <p class="hero-subtitle text-right md:text-left">
+            RÉALISATRICE<br class="md:hidden" /> <span class="hidden md:inline"> </span> PHOTOGRAPHE<br class="md:hidden" /> <span class="hidden md:inline"> </span> MONTEUSE
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
