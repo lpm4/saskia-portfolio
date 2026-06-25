@@ -190,4 +190,143 @@
     color: rgb(226, 206, 182);
     word-spacing: 0.4em;
   }
+
+  /* Films Page Typography - Valeurs exactes du site original */
+  .films-page-title {
+    font-family: 'Pragmatica Extended', sans-serif;
+    font-size: 207.217px;
+    font-weight: 700;
+    letter-spacing: -16.5773px;
+    line-height: 179.95px;
+    text-transform: uppercase;
+    color: rgb(0, 0, 0);
+    margin: 0;
+  }
+
+  .films-page-description {
+    font-family: 'Courier Std', monospace;
+    font-size: 15.0833px;
+    font-weight: 400;
+    letter-spacing: normal;
+    line-height: 19.9833px;
+    color: rgb(0, 0, 0);
+    margin-top: 16px;
+  }
+
+  .films-category-title {
+    font-family: 'Pragmatica Extended', sans-serif;
+    font-size: 73.6px;
+    font-weight: 700;
+    letter-spacing: -5.888px;
+    line-height: 86.1167px;
+    text-transform: uppercase;
+    color: rgb(0, 0, 0);
+    padding: 0;
+    margin: 0 0 32px 0;
+  }
+
+  .films-category-title-large {
+    font-family: 'Pragmatica Extended', sans-serif;
+    font-size: 207.217px;
+    font-weight: 700;
+    letter-spacing: -16.5773px;
+    line-height: 179.95px;
+    text-transform: uppercase;
+    color: rgb(0, 0, 0);
+    margin: 0 0 32px 0;
+  }
+
+  .films-category-title-clip {
+    font-family: 'Pragmatica Extended', sans-serif;
+    font-size: 60px;
+    font-weight: 700;
+    letter-spacing: -4.8px;
+    line-height: 70px;
+    text-transform: uppercase;
+    color: rgb(0, 0, 0);
+    padding: 0;
+    margin: 0 0 32px 0;
+  }
+
+  .film-card-title {
+    font-family: 'Pragmatica Extended', sans-serif;
+    font-size: 73px;
+    font-weight: 700;
+    letter-spacing: -5.84px;
+    line-height: 85px;
+    text-transform: uppercase;
+    color: rgb(0, 0, 0);
+    padding: 0;
+    margin: 32px 0;
+    text-align: center;
+  }
+
+  .film-card-title-red {
+    font-family: 'Pragmatica Extended', sans-serif;
+    font-size: 73px;
+    font-weight: 700;
+    letter-spacing: -5.84px;
+    line-height: 85px;
+    text-transform: uppercase;
+    color: rgb(239, 30, 30);
+    padding: 0;
+    margin: 0;
+    text-align: left;
+  }
+
+  .film-card-description {
+    font-family: 'Courier Std', monospace;
+    font-size: 15.0833px;
+    font-weight: 400;
+    letter-spacing: normal;
+    line-height: 19.9833px;
+    color: rgb(0, 0, 0);
+    margin: 16px 0 0 0;
+    text-align: center;
+  }
+
+  .films-featured-title {
+    font-family: 'Pragmatica Extended', sans-serif;
+    font-size: 207.217px;
+    font-weight: 700;
+    letter-spacing: -16.5773px;
+    line-height: 179.95px;
+    text-transform: uppercase;
+    color: rgb(0, 0, 0);
+    margin: 0;
+    text-align: left;
+  }
+
+  .films-hero-title {
+    font-family: 'Pragmatica Extended', sans-serif;
+    font-size: 73.6px;
+    font-weight: 700;
+    letter-spacing: -5.888px;
+    line-height: 86.1167px;
+    text-transform: uppercase;
+    color: rgb(0, 0, 0);
+    margin: 0 0 32px 0;
+  }
+
+  .films-hero-category {
+    font-family: 'Pragmatica Extended', sans-serif;
+    font-size: 39.0333px;
+    font-weight: 700;
+    letter-spacing: -3.12267px;
+    line-height: 48.7167px;
+    text-transform: uppercase;
+    color: rgb(0, 0, 0);
+    margin: 0;
+  }
+
+  .films-hero-category-mobile {
+    font-family: 'Pragmatica Extended', sans-serif;
+    font-size: 39.0333px;
+    font-weight: 700;
+    letter-spacing: -3.12267px;
+    line-height: 48.7167px;
+    text-transform: uppercase;
+    color: rgb(0, 0, 0);
+    margin: 32px 0;
+  }
 }

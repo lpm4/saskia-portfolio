@@ -3,9 +3,8 @@ title: "Alma Mater"
 videoId: "694045330"
 videoPlatform: "vimeo"
 category: "documentaires"
-thumbnailUrl: "https://placeholder.cloudinary.com/alma-mater.jpg"
-featured: true
-description: "Exploration de la pression sociétale sur les femmes concernant la maternité, questionnant la liberté et la responsabilité autour des choix de vie intime dans la société occidentale"
+featured: false
+description: "Si les femmes ont conquis des espaces de liberté dans notre société occidentale, riche et émancipée, cette même société les somme pourtant de s'expliquer sur leur choix dont le plus intime: celui d'être mère. Et si finalement, ce qui restait à conquérir dans la liberté de ne pas avoir à rendre de compte ? La pression sociale reste forte autour de l'idée de maternité."
 ---
 
 Documentaire sur la pression sociétale et la maternité.

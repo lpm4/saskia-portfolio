@@ -3,9 +3,8 @@ title: "L'Absente"
 videoId: "698190984"
 videoPlatform: "vimeo"
 category: "fictions"
-thumbnailUrl: "https://placeholder.cloudinary.com/labsente.jpg"
 featured: false
-description: "Exploration des souvenirs d'enfance perdus et de la présence maternelle absente à travers l'imagerie onirique. Soumission au Nikon Film Festival sur le thème des rêves"
+description: "Dans le cadre de la douzième édition du festival Nikon sur le thème du rêve, j'ai choisi d'aborder le souvenir de l'enfance perdue. Celui de la mère disparue. Le rêve de sa présence."
 ---
 
 Fiction pour le Nikon Film Festival - thème: les rêves.

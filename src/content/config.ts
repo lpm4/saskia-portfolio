@@ -8,7 +8,7 @@ const filmsCollection = defineCollection({
     videoId: z.string(), // ID Vimeo/YouTube OU URL fichier vidéo
     videoPlatform: z.enum(['vimeo', 'youtube', 'file']).default('vimeo'),
     category: z.enum(['documentaires', 'fictions', 'branding', 'clip']),
-    thumbnailUrl: z.string().url(), // URL Cloudinary de l'image de couverture
+    thumbnailUrl: z.string().url().optional(), // URL Cloudinary de l'image de couverture (optionnel, auto-généré pour Vimeo/YouTube)
     year: z.number().optional(),
     featured: z.boolean().default(false), // Afficher sur la homepage
     description: z.string(),

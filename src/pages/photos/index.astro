@@ -1,0 +1,294 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Photos - Saskia Maitrepierre"
+  description="Galeries de portraits photographiques"
+>
+  <!-- Images côte à côte: 70% + 30% -->
+  <section class="bg-[#E8E4DF] p-8">
+    <div class="grid grid-cols-[7fr_3fr] gap-4">
+      <div>
+        <img
+          src="/images/1.webp"
+          alt="Photo 1"
+          class="w-full h-full object-cover"
+        />
+      </div>
+      <div>
+        <img
+          src="/images/2.webp"
+          alt="Photo 2"
+          class="w-full h-full object-cover"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Animation Marquee - Texte ondulé qui défile -->
+  <section class="bg-[#E8E4DF] overflow-hidden" style="height: 350px;">
+    <svg width="100%" height="350" viewBox="0 0 2200 350" preserveAspectRatio="none">
+      <defs>
+        <path
+          id="wavePath"
+          d="M-550,223.2 S-183.15,283.2 0,283.2 S366.85,223.2 550,223.2 S916.85,283.2 1100,283.2 S1466.85,223.2 1650,223.2 S2016.85,283.2 2200,283.2 S2566.85,223.2 2750,223.2 S3116.85,283.2 3300,283.2 S3666.85,223.2 3850,223.2 S4216.85,283.2 4400,283.2"
+        />
+      </defs>
+
+      <text
+        fill="#000"
+        font-size="177.267"
+        font-family="Pragmatica Extended, sans-serif"
+        font-weight="700"
+        letter-spacing="-14.1813"
+        text-transform="uppercase"
+      >
+        <textPath href="#wavePath" class="marquee-textpath">
+          PHOTOS * PHOTOS * PHOTOS * PHOTOS * PHOTOS * PHOTOS * PHOTOS * PHOTOS * PHOTOS * PHOTOS * PHOTOS * PHOTOS *
+        </textPath>
+      </text>
+    </svg>
+  </section>
+
+  <style>
+    .marquee-textpath {
+      animation: marquee-offset 25s linear infinite;
+    }
+
+    @keyframes marquee-offset {
+      from {
+        startOffset: 0%;
+      }
+      to {
+        startOffset: 100%;
+      }
+    }
+  </style>
+
+  <script>
+    // Animation JavaScript pour le startOffset (CSS animation ne marche pas toujours sur SVG)
+    const textPath = document.querySelector('.marquee-textpath');
+    let offset = 0;
+
+    function animate() {
+      offset -= 0.025;
+      if (offset < -100) {
+        offset = 0;
+      }
+      if (textPath) {
+        textPath.setAttribute('startOffset', `${offset}%`);
+      }
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
+
+  <!-- 3 photos alignées -->
+  <section class="bg-[#E8E4DF] p-8">
+    <div class="grid grid-cols-3 gap-6">
+      <div>
+        <img
+          src="/images/3.webp"
+          alt="Photo 3"
+          class="w-full h-full object-cover"
+        />
+      </div>
+      <div>
+        <img
+          src="/images/4.webp"
+          alt="Photo 4"
+          class="w-full h-full object-cover"
+        />
+      </div>
+      <div>
+        <img
+          src="/images/5.webp"
+          alt="Photo 5"
+          class="w-full h-full object-cover"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Carousel portraits -->
+  <section class="bg-[#E8E4DF] p-8">
+    <div class="carousel-container relative">
+      <!-- Flèche gauche -->
+      <button class="carousel-arrow carousel-arrow-left" aria-label="Précédent">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M15 18l-6-6 6-6"/>
+        </svg>
+      </button>
+
+      <!-- Flèche droite -->
+      <button class="carousel-arrow carousel-arrow-right" aria-label="Suivant">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 18l6-6-6-6"/>
+        </svg>
+      </button>
+
+      <!-- Conteneur scrollable -->
+      <div class="carousel-track-container overflow-hidden">
+        <div class="carousel-track flex gap-6 transition-transform duration-300 ease-out cursor-grab active:cursor-grabbing">
+          <div class="carousel-slide flex-shrink-0" style="width: 400px;">
+            <div class="aspect-square overflow-hidden">
+              <img
+                src="/images/amel.webp"
+                alt="Amel"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <p class="text-center mt-2 font-['Pragmatica_Extended'] text-sm uppercase font-bold">Amel</p>
+          </div>
+          <div class="carousel-slide flex-shrink-0" style="width: 400px;">
+            <div class="aspect-square overflow-hidden">
+              <img
+                src="/images/guillaume.webp"
+                alt="Guillaume"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <p class="text-center mt-2 font-['Pragmatica_Extended'] text-sm uppercase font-bold">Guillaume</p>
+          </div>
+          <div class="carousel-slide flex-shrink-0" style="width: 400px;">
+            <div class="aspect-square overflow-hidden">
+              <img
+                src="/images/janelle.webp"
+                alt="Janelle"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <p class="text-center mt-2 font-['Pragmatica_Extended'] text-sm uppercase font-bold">Janelle</p>
+          </div>
+          <div class="carousel-slide flex-shrink-0" style="width: 400px;">
+            <div class="aspect-square overflow-hidden">
+              <img
+                src="/images/justine.webp"
+                alt="Justine"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <p class="text-center mt-2 font-['Pragmatica_Extended'] text-sm uppercase font-bold">Justine</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .carousel-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .carousel-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 10;
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .carousel-arrow:hover {
+      background: rgba(0, 0, 0, 0.8);
+    }
+
+    .carousel-arrow-left {
+      left: -60px;
+    }
+
+    .carousel-arrow-right {
+      right: -60px;
+    }
+
+    .carousel-track-container {
+      padding: 20px 0;
+    }
+  </style>
+
+  <script>
+    const track = document.querySelector('.carousel-track');
+    const slides = Array.from(track.children);
+    const prevButton = document.querySelector('.carousel-arrow-left');
+    const nextButton = document.querySelector('.carousel-arrow-right');
+
+    let currentIndex = 0;
+    const slideWidth = 400 + 24; // width + gap
+
+    // Navigation par flèches
+    nextButton.addEventListener('click', () => {
+      if (currentIndex < slides.length - 3) {
+        currentIndex++;
+        updateCarousel();
+      }
+    });
+
+    prevButton.addEventListener('click', () => {
+      if (currentIndex > 0) {
+        currentIndex--;
+        updateCarousel();
+      }
+    });
+
+    function updateCarousel() {
+      const offset = -currentIndex * slideWidth;
+      track.style.transform = `translateX(${offset}px)`;
+    }
+
+    // Drag avec la souris
+    let isDragging = false;
+    let startX = 0;
+    let scrollLeft = 0;
+
+    track.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      startX = e.pageX;
+      scrollLeft = currentIndex * slideWidth;
+    });
+
+    track.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      e.preventDefault();
+      const x = e.pageX;
+      const walk = (startX - x);
+      const newScroll = scrollLeft + walk;
+      track.style.transform = `translateX(-${newScroll}px)`;
+    });
+
+    track.addEventListener('mouseup', (e) => {
+      if (!isDragging) return;
+      isDragging = false;
+      const x = e.pageX;
+      const walk = startX - x;
+
+      if (Math.abs(walk) > 50) {
+        if (walk > 0 && currentIndex < slides.length - 3) {
+          currentIndex++;
+        } else if (walk < 0 && currentIndex > 0) {
+          currentIndex--;
+        }
+      }
+      updateCarousel();
+    });
+
+    track.addEventListener('mouseleave', () => {
+      if (isDragging) {
+        isDragging = false;
+        updateCarousel();
+      }
+    });
+  </script>
+</BaseLayout>

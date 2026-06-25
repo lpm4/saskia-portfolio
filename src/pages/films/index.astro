@@ -1,0 +1,342 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import VideoPlayer from '../../components/VideoPlayer.astro';
+
+// Récupérer tous les films
+const allFilms = await getCollection('films');
+
+// Film featured pour "À LA UNE"
+const featuredFilm = allFilms.find(f => f.data.featured);
+
+// Grouper par catégorie (exclure le film featured)
+const filmsByCategory = {
+  documentaires: allFilms.filter(f => f.data.category === 'documentaires' && !f.data.featured),
+  fictions: allFilms
+    .filter(f => f.data.category === 'fictions' && !f.data.featured)
+    .sort((a, b) => {
+      // "Mai Que Veux-tu ?" en premier
+      if (a.data.title === 'Mai Que Veux-tu ?') return -1;
+      if (b.data.title === 'Mai Que Veux-tu ?') return 1;
+      return 0;
+    }),
+  branding: allFilms
+    .filter(f => f.data.category === 'branding' && !f.data.featured)
+    .sort((a, b) => {
+      // Ordre: Harbat, Mon Souvenir, puis les autres
+      const order = ['Harbat Running Lab x On', 'Mon Souvenir'];
+      const aIndex = order.indexOf(a.data.title);
+      const bIndex = order.indexOf(b.data.title);
+      if (aIndex !== -1 && bIndex !== -1) return aIndex - bIndex;
+      if (aIndex !== -1) return -1;
+      if (bIndex !== -1) return 1;
+      return 0;
+    }),
+  clip: allFilms.filter(f => f.data.category === 'clip' && !f.data.featured),
+};
+
+const categoryLabels = {
+  documentaires: 'DOCUMENTAIRES',
+  fictions: 'FICTIONS',
+  branding: 'BRANDING',
+  clip: 'CLIP',
+};
+---
+
+<BaseLayout
+  title="Films - Saskia Maitrepierre"
+  description="Portfolio de films documentaires, fictions, branding et clips musicaux"
+>
+  <!-- Hero Section -->
+  <section class="bg-[#E8E4DF] flex items-center py-20">
+    <div class="container-custom w-full">
+      <!-- Desktop Layout -->
+      <div class="hidden md:grid md:grid-cols-2 gap-8 items-center relative">
+        <!-- Colonne gauche: Liste catégories -->
+        <div class="space-y-8">
+          <h3 class="films-hero-category">DOCUMENTAIRES</h3>
+          <h3 class="films-hero-category">FICTIONS</h3>
+          <h3 class="films-hero-category">BRANDING</h3>
+          <h3 class="films-hero-category">CLIP</h3>
+        </div>
+
+        <!-- Colonne droite: Photo -->
+        <div class="aspect-[3/4] overflow-hidden">
+          <img
+            src="/images/films-hero.webp"
+            alt="Films"
+            class="w-full h-full object-cover"
+            loading="eager"
+          />
+        </div>
+
+        <!-- Titre FILMS centré et chevauchant -->
+        <div class="absolute inset-0 flex items-start justify-center pointer-events-none pt-32">
+          <h1 class="films-hero-title">FILMS</h1>
+        </div>
+      </div>
+
+      <!-- Mobile Layout -->
+      <div class="md:hidden space-y-8">
+        <h1 class="films-page-title text-center">FILMS</h1>
+
+        <div class="space-y-4 text-center">
+          <h3 class="films-hero-category-mobile">DOCUMENTAIRES</h3>
+          <h3 class="films-hero-category-mobile">FICTIONS</h3>
+          <h3 class="films-hero-category-mobile">BRANDING</h3>
+          <h3 class="films-hero-category-mobile">CLIP</h3>
+        </div>
+
+        <div class="aspect-[3/4] overflow-hidden max-w-md mx-auto">
+          <img
+            src="/images/films-hero.webp"
+            alt="Films"
+            class="w-full h-full object-cover"
+            loading="eager"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- À LA UNE Section -->
+  {featuredFilm && (
+    <section class="py-16 bg-[#E8E4DF]">
+      <div class="px-8">
+        <h1 class="films-featured-title mb-12">À LA<br />UNE</h1>
+      </div>
+
+      <div class="container-custom max-w-5xl">
+        <div class="mb-8">
+          <h3 class="film-card-title text-center">{featuredFilm.data.title}</h3>
+          <p class="film-card-description text-center">{featuredFilm.data.description}</p>
+        </div>
+
+        <VideoPlayer
+          videoId={featuredFilm.data.videoId}
+          platform={featuredFilm.data.videoPlatform}
+          thumbnailUrl={featuredFilm.data.thumbnailUrl}
+          title={featuredFilm.data.title}
+          aspectRatio="16/9"
+        />
+      </div>
+    </section>
+  )}
+
+  <!-- Films par catégorie -->
+  {Object.entries(filmsByCategory).map(([category, films]) => (
+    films.length > 0 && (
+      <section class="py-16 bg-[#E8E4DF]">
+        <div class={category === 'documentaires' ? 'px-8' : 'container-custom max-w-5xl'}>
+          <!-- Titre de la catégorie -->
+          {category === 'documentaires' && (
+            <h2 class="films-category-title-large text-left mb-16">
+              DOCU<br />MENT<br />AIRES
+            </h2>
+          )}
+          {category === 'fictions' && (
+            <h2 class="films-category-title-large text-center mb-16">
+              FICTIONS
+            </h2>
+          )}
+          {category === 'branding' && (
+            <h2 class="films-category-title-large text-center mb-[24rem]">
+              BRANDING
+            </h2>
+          )}
+          {category === 'clip' && (
+            <h2 class="films-category-title-clip text-center mb-16">
+              CLIP
+            </h2>
+          )}
+
+        </div>
+
+        <!-- Liste des films -->
+        <div class:list={[
+          'container-custom max-w-5xl',
+          category === 'branding' && 'mt-[24rem]'
+        ]}>
+          <div class="space-y-24">
+            {films.map((film, index) => (
+              <div class="film-item">
+                {/* Layout spécial pour "Mai Que Veux-tu ?" */}
+                {category === 'fictions' && film.data.title === 'Mai Que Veux-tu ?' ? (
+                  <>
+                    {/* Vidéo en premier */}
+                    <VideoPlayer
+                      videoId={film.data.videoId}
+                      platform={film.data.videoPlatform}
+                      thumbnailUrl={film.data.thumbnailUrl}
+                      title={film.data.title}
+                      aspectRatio="16/9"
+                    />
+
+                    {/* Titre à gauche + Description à droite */}
+                    <div class="grid grid-cols-2 gap-8 mt-8">
+                      <div class="text-left">
+                        <h3 class="film-card-title-red">
+                          MAI&nbsp;&nbsp;&nbsp;QUE<br />VEUX-TU ?
+                        </h3>
+                      </div>
+                      {film.data.description && (
+                        <div class="flex items-start">
+                          <div class="film-card-description text-left">
+                            {film.data.description.split('\n\n').map((line, i) => (
+                              i === 0 ? (
+                                <p>{line}</p>
+                              ) : (
+                                <p class="underline mt-4">{line}</p>
+                              )
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </>
+                ) : category === 'fictions' && film.data.title === 'Hors Champ' ? (
+                  <>
+                    {/* Titre centré */}
+                    <h3 class="film-card-title text-center mb-8">{film.data.title}</h3>
+
+                    {/* Vidéo à gauche + Description à droite */}
+                    <div class="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
+                      <div class="grid grid-cols-2 gap-8 px-8">
+                        <div>
+                          <VideoPlayer
+                            videoId={film.data.videoId}
+                            platform={film.data.videoPlatform}
+                            thumbnailUrl={film.data.thumbnailUrl}
+                            title={film.data.title}
+                            aspectRatio="16/9"
+                          />
+                        </div>
+                        {film.data.description && (
+                          <div class="flex items-center">
+                            <p class="film-card-description text-left">
+                              {film.data.description}
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </>
+                ) : category === 'fictions' && film.data.title === "L'Absente" ? (
+                  <>
+                    {/* Layout 2 colonnes: Titre + Description à gauche, Vidéo à droite */}
+                    <div class="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
+                      <div class="grid grid-cols-2 gap-8 px-8">
+                        {/* Colonne gauche: Titre + Description */}
+                        <div>
+                          <h3 class="film-card-title !text-left mb-4">{film.data.title}</h3>
+                          {film.data.description && (
+                            <p class="film-card-description !text-left">
+                              {film.data.description}
+                            </p>
+                          )}
+                        </div>
+
+                        {/* Colonne droite: Vidéo (commence après le titre) */}
+                        <div class="mt-32">
+                          <VideoPlayer
+                            videoId={film.data.videoId}
+                            platform={film.data.videoPlatform}
+                            thumbnailUrl={film.data.thumbnailUrl}
+                            title={film.data.title}
+                            aspectRatio="16/9"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                ) : category === 'branding' && film.data.title === 'Mon Souvenir' ? (
+                  <>
+                    {/* Layout Mon Souvenir: titre à droite */}
+                    <div class="mb-8">
+                      <h3 class="film-card-title !text-right mb-4">{film.data.title}</h3>
+                      {film.data.description && (
+                        <p class="film-card-description text-center">
+                          {film.data.description}
+                        </p>
+                      )}
+                    </div>
+
+                    <VideoPlayer
+                      videoId={film.data.videoId}
+                      platform={film.data.videoPlatform}
+                      thumbnailUrl={film.data.thumbnailUrl}
+                      title={film.data.title}
+                      aspectRatio="16/9"
+                    />
+                  </>
+                ) : category === 'branding' && film.data.title === 'Ballerina' ? (
+                  <>
+                    {/* Layout Ballerina: titre très à gauche, vidéo prend l'espace restant */}
+                    <div class="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] mt-96">
+                      <div class="grid grid-cols-[1fr_2fr] gap-16 items-start pl-8 pr-8">
+                        <div>
+                          <h3 class="film-card-title !text-left">{film.data.title}</h3>
+                        </div>
+                        <div>
+                          <VideoPlayer
+                            videoId={film.data.videoId}
+                            platform={film.data.videoPlatform}
+                            thumbnailUrl={film.data.thumbnailUrl}
+                            title={film.data.title}
+                            aspectRatio="16/9"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                ) : category === 'clip' && film.data.title === 'Les Injustes' ? (
+                  <>
+                    {/* Layout Les Injustes: vidéo à gauche, titre centré à droite sur 2 lignes en orange */}
+                    <div class="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
+                      <div class="grid grid-cols-2 gap-2 items-center px-8">
+                        <div>
+                          <VideoPlayer
+                            videoId={film.data.videoId}
+                            platform={film.data.videoPlatform}
+                            thumbnailUrl={film.data.thumbnailUrl}
+                            title={film.data.title}
+                            aspectRatio="16/9"
+                          />
+                        </div>
+                        <div class="flex items-center justify-start">
+                          <h3 class="film-card-title" style="color: rgb(234, 93, 44); text-align: left;">
+                            LES<br />INJUSTES
+                          </h3>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    {/* Layout normal: titre + description puis vidéo */}
+                    <div class="mb-8">
+                      <h3 class="film-card-title text-center mb-4">{film.data.title}</h3>
+                      {film.data.description && (
+                        <p class="film-card-description text-center">
+                          {film.data.description}
+                        </p>
+                      )}
+                    </div>
+
+                    <VideoPlayer
+                      videoId={film.data.videoId}
+                      platform={film.data.videoPlatform}
+                      thumbnailUrl={film.data.thumbnailUrl}
+                      title={film.data.title}
+                      aspectRatio="16/9"
+                    />
+                  </>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  ))}
+</BaseLayout>

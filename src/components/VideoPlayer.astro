@@ -32,91 +32,33 @@ const getEmbedUrl = () => {
 };
 
 const embedUrl = getEmbedUrl();
-
-// Thumbnail par défaut selon la plateforme
-const defaultThumbnail = platform === 'vimeo'
-  ? `https://vumbnail.com/${videoId}.jpg`
-  : platform === 'youtube'
-  ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
-  : thumbnailUrl || '';
-
-const thumbnail = thumbnailUrl || defaultThumbnail;
 ---
 
 <div
   class:list={[
-    'relative overflow-hidden bg-gray-900',
-    `aspect-[${aspectRatio.replace('/', '-')}]`,
+    'relative overflow-hidden bg-gray-900 w-full',
     className
   ]}
-  data-video-player
-  data-embed-url={embedUrl}
-  data-platform={platform}
+  style={`aspect-ratio: ${aspectRatio};`}
 >
-  <!-- Facade : Image + Bouton Play -->
-  <div class="video-facade absolute inset-0 cursor-pointer group">
-    {thumbnail && (
-      <img
-        src={thumbnail}
-        alt={title}
-        class="w-full h-full object-cover"
-        loading="lazy"
-      />
-    )}
-
-    <!-- Bouton Play -->
-    <div class="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-colors">
-      <button
-        class="video-play-btn w-20 h-20 flex items-center justify-center bg-white/90 rounded-full hover:bg-white hover:scale-110 transition-all"
-        aria-label={`Lire ${title}`}
-      >
-        <svg class="w-8 h-8 ml-1 text-black" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M8 5v14l11-7z"/>
-        </svg>
-      </button>
-    </div>
-  </div>
-
-  <!-- Container pour l'iframe (initialement vide) -->
-  <div class="video-iframe-container hidden"></div>
+  {platform === 'file' ? (
+    <video
+      src={embedUrl}
+      controls
+      class="w-full h-full"
+      poster={thumbnailUrl}
+    >
+      Votre navigateur ne supporte pas la lecture de vidéos.
+    </video>
+  ) : (
+    <iframe
+      src={embedUrl}
+      title={title}
+      frameborder="0"
+      allow="autoplay; fullscreen; picture-in-picture; clipboard-write"
+      allowfullscreen
+      class="w-full h-full"
+      loading="lazy"
+    ></iframe>
+  )}
 </div>
-
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const videoPlayers = document.querySelectorAll('[data-video-player]');
-
-    videoPlayers.forEach((player) => {
-      const facade = player.querySelector('.video-facade');
-      const iframeContainer = player.querySelector('.video-iframe-container');
-      const embedUrl = player.getAttribute('data-embed-url');
-      const platform = player.getAttribute('data-platform');
-
-      facade?.addEventListener('click', () => {
-        // Créer l'iframe selon la plateforme
-        let iframe;
-
-        if (platform === 'file') {
-          // Pour les fichiers vidéo directs, utiliser <video>
-          iframe = document.createElement('video');
-          iframe.src = embedUrl!;
-          iframe.controls = true;
-          iframe.autoplay = true;
-          iframe.className = 'w-full h-full';
-        } else {
-          // Pour Vimeo et YouTube, utiliser <iframe>
-          iframe = document.createElement('iframe');
-          iframe.src = embedUrl!;
-          iframe.frameBorder = '0';
-          iframe.allow = 'autoplay; fullscreen; picture-in-picture';
-          iframe.allowFullscreen = true;
-          iframe.className = 'w-full h-full';
-        }
-
-        // Remplacer la facade par l'iframe
-        iframeContainer!.classList.remove('hidden');
-        iframeContainer!.appendChild(iframe);
-        facade?.remove();
-      });
-    });
-  });
-</script>
