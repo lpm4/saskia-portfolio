@@ -1,0 +1,69 @@
+backend:
+  name: git-gateway
+  branch: master
+
+publish_mode: simple
+media_folder: public/images
+public_folder: /images
+
+collections:
+  - name: films
+    label: Films
+    folder: src/content/films
+    create: true
+    slug: '{{slug}}'
+    fields:
+      - { label: Titre, name: title, widget: string }
+      - label: Vidéo
+        name: videoId
+        widget: string
+        hint: 'ID Vimeo/YouTube (ex: 694045330) ou URL du fichier vidéo'
+      - label: Plateforme vidéo
+        name: videoPlatform
+        widget: select
+        options: [vimeo, youtube, file]
+        default: vimeo
+      - label: Catégorie
+        name: category
+        widget: select
+        options: [documentaires, fictions, branding, clip]
+      - label: Image de couverture
+        name: thumbnailUrl
+        widget: image
+        required: false
+        hint: 'Optionnel - générée automatiquement pour Vimeo/YouTube'
+      - { label: Année, name: year, widget: number, value_type: int, required: false }
+      - label: Mis en avant sur la page d'accueil
+        name: featured
+        widget: boolean
+        default: false
+      - { label: Description, name: description, widget: text }
+      - { label: Contenu, name: body, widget: markdown, required: false }
+
+  - name: photos
+    label: Photos
+    folder: src/content/photos
+    create: true
+    slug: '{{slug}}'
+    fields:
+      - { label: Sujet / Série, name: subject, widget: string }
+      - { label: Image de couverture, name: coverImageUrl, widget: image }
+      - label: Galerie
+        name: images
+        widget: list
+        field: { label: Image, name: image, widget: image }
+      - { label: Contenu, name: body, widget: markdown, required: false }
+
+  - name: backstage
+    label: Backstage
+    files:
+      - name: backstage
+        label: Backstage
+        file: src/content/backstage/index.md
+        fields:
+          - { label: Titre, name: title, widget: string, default: Backstage }
+          - label: Photos
+            name: images
+            widget: list
+            field: { label: Image, name: image, widget: image }
+          - { label: Contenu, name: body, widget: markdown, required: false }

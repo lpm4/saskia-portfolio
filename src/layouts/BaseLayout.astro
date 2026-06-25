@@ -69,6 +69,20 @@ const ogImage = new URL(image, Astro.site);
 
     <!-- Performance -->
     <meta name="theme-color" content="#FFFFFF" />
+
+    <!-- Netlify Identity (login + invite redirect for /admin) -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js" is:inline></script>
+    <script is:inline>
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on('init', (user) => {
+          if (!user) {
+            window.netlifyIdentity.on('login', () => {
+              document.location.href = '/admin/';
+            });
+          }
+        });
+      }
+    </script>
   </head>
   <body class="flex flex-col min-h-screen bg-[#E8E4DF]">
     <Header />
