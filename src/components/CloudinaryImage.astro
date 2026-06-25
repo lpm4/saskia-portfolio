@@ -44,7 +44,7 @@ const generateCloudinaryUrl = (width: number) => {
 const srcset = widths.map(w => `${generateCloudinaryUrl(w)} ${w}w`).join(', ');
 
 // URL par défaut (taille moyenne)
-const defaultSrc = generateCloudinaryUrl(widths[1] || widths[0]);
+const defaultSrc = generateCloudinaryUrl(widths[1] || widths[0] || 800);
 
 // Classes pour l'aspect ratio si spécifié
 const aspectRatioClass = aspectRatio ? `aspect-[${aspectRatio.replace('/', '-')}]` : '';

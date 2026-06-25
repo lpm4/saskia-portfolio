@@ -2,7 +2,7 @@
 interface Props {
   videoId: string; // ID Vimeo/YouTube ou URL fichier
   platform: 'vimeo' | 'youtube' | 'file';
-  thumbnailUrl?: string; // Image de couverture (optionnelle)
+  thumbnailUrl?: string | undefined; // Image de couverture (optionnelle)
   title: string;
   aspectRatio?: string;
   class?: string;

@@ -35,12 +35,6 @@ const filmsByCategory = {
   clip: allFilms.filter(f => f.data.category === 'clip' && !f.data.featured),
 };
 
-const categoryLabels = {
-  documentaires: 'DOCUMENTAIRES',
-  fictions: 'FICTIONS',
-  branding: 'BRANDING',
-  clip: 'CLIP',
-};
 ---
 
 <BaseLayout
@@ -158,7 +152,7 @@ const categoryLabels = {
           category === 'branding' && 'mt-[24rem]'
         ]}>
           <div class="space-y-24">
-            {films.map((film, index) => (
+            {films.map((film) => (
               <div class="film-item">
                 {/* Layout spécial pour "Mai Que Veux-tu ?" */}
                 {category === 'fictions' && film.data.title === 'Mai Que Veux-tu ?' ? (

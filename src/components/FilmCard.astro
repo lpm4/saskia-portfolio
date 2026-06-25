@@ -14,13 +14,9 @@ const {
   title,
   slug,
   thumbnailUrl,
-  category,
   description,
   featured = false,
 } = Astro.props;
-
-// Formater la catégorie pour l'affichage
-const categoryLabel = category.charAt(0).toUpperCase() + category.slice(1);
 ---
 
 <article class="group">

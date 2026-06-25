@@ -220,75 +220,78 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   </style>
 
   <script>
-    const track = document.querySelector('.carousel-track');
-    const slides = Array.from(track.children);
-    const prevButton = document.querySelector('.carousel-arrow-left');
-    const nextButton = document.querySelector('.carousel-arrow-right');
+    const track = document.querySelector<HTMLElement>('.carousel-track');
+    const prevButton = document.querySelector<HTMLElement>('.carousel-arrow-left');
+    const nextButton = document.querySelector<HTMLElement>('.carousel-arrow-right');
 
-    let currentIndex = 0;
-    const slideWidth = 400 + 24; // width + gap
+    if (track && prevButton && nextButton) {
+      const slides = Array.from(track.children);
 
-    // Navigation par flèches
-    nextButton.addEventListener('click', () => {
-      if (currentIndex < slides.length - 3) {
-        currentIndex++;
-        updateCarousel();
-      }
-    });
+      let currentIndex = 0;
+      const slideWidth = 400 + 24; // width + gap
 
-    prevButton.addEventListener('click', () => {
-      if (currentIndex > 0) {
-        currentIndex--;
-        updateCarousel();
-      }
-    });
-
-    function updateCarousel() {
-      const offset = -currentIndex * slideWidth;
-      track.style.transform = `translateX(${offset}px)`;
-    }
-
-    // Drag avec la souris
-    let isDragging = false;
-    let startX = 0;
-    let scrollLeft = 0;
-
-    track.addEventListener('mousedown', (e) => {
-      isDragging = true;
-      startX = e.pageX;
-      scrollLeft = currentIndex * slideWidth;
-    });
-
-    track.addEventListener('mousemove', (e) => {
-      if (!isDragging) return;
-      e.preventDefault();
-      const x = e.pageX;
-      const walk = (startX - x);
-      const newScroll = scrollLeft + walk;
-      track.style.transform = `translateX(-${newScroll}px)`;
-    });
-
-    track.addEventListener('mouseup', (e) => {
-      if (!isDragging) return;
-      isDragging = false;
-      const x = e.pageX;
-      const walk = startX - x;
-
-      if (Math.abs(walk) > 50) {
-        if (walk > 0 && currentIndex < slides.length - 3) {
+      // Navigation par flèches
+      nextButton.addEventListener('click', () => {
+        if (currentIndex < slides.length - 3) {
           currentIndex++;
-        } else if (walk < 0 && currentIndex > 0) {
-          currentIndex--;
+          updateCarousel();
         }
-      }
-      updateCarousel();
-    });
+      });
 
-    track.addEventListener('mouseleave', () => {
-      if (isDragging) {
-        isDragging = false;
-        updateCarousel();
+      prevButton.addEventListener('click', () => {
+        if (currentIndex > 0) {
+          currentIndex--;
+          updateCarousel();
+        }
+      });
+
+      function updateCarousel() {
+        const offset = -currentIndex * slideWidth;
+        track!.style.transform = `translateX(${offset}px)`;
       }
-    });
+
+      // Drag avec la souris
+      let isDragging = false;
+      let startX = 0;
+      let scrollLeft = 0;
+
+      track.addEventListener('mousedown', (e: MouseEvent) => {
+        isDragging = true;
+        startX = e.pageX;
+        scrollLeft = currentIndex * slideWidth;
+      });
+
+      track.addEventListener('mousemove', (e: MouseEvent) => {
+        if (!isDragging) return;
+        e.preventDefault();
+        const x = e.pageX;
+        const walk = (startX - x);
+        const newScroll = scrollLeft + walk;
+        track.style.transform = `translateX(-${newScroll}px)`;
+      });
+
+      track.addEventListener('mouseup', (e: MouseEvent) => {
+        if (!isDragging) return;
+        isDragging = false;
+        const x = e.pageX;
+        const walk = startX - x;
+
+        if (Math.abs(walk) > 50) {
+          if (walk > 0 && currentIndex < slides.length - 3) {
+            currentIndex++;
+          } else if (walk < 0 && currentIndex > 0) {
+            currentIndex--;
+          }
+        }
+        updateCarousel();
+      });
+
+      track.addEventListener('mouseleave', () => {
+        if (isDragging) {
+          isDragging = false;
+          updateCarousel();
+        }
+      });
+    }
   </script>
 </BaseLayout>
